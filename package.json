@@ -1,18 +1,17 @@
 {
-  "name": "language-javascript",
-  "version": "0.43.0",
-  "description": "JavaScript language support in Atom",
+  "name": "language-multiverse",
+  "version": "0.0.1",
+  "description": "Multiverse language support in Atom",
   "engines": {
     "atom": "*",
     "node": "*"
   },
-  "homepage": "http://atom.github.io/language-javascript",
+  "homepage": "http://github.com/drewctaylor/language-multiverse",
   "repository": {
     "type": "git",
-    "url": "https://github.com/atom/language-javascript.git"
+    "url": "https://github.com/drewctaylor/language-multiverse.git"
   },
-  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/atom/language-javascript/issues"
+    "url": "https://github.com/drewctaylor/language-multiverse/issues"
   }
 }
