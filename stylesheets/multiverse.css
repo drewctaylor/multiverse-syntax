@@ -1,0 +1,24 @@
+.entity {
+  color: #377eb8;
+}
+
+.attribute {
+  color: #4daf4a;
+}
+
+.operator {
+  color: gray;
+}
+
+.string {
+  color: gray !important;
+  font-weight: 100;
+}
+
+.string .template {
+  font-style: normal;
+}
+
+.goal.label {
+  color: gray;
+}
