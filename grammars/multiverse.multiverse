@@ -1,4 +1,7 @@
 state {
+
+    ~ Amanda Woodward ~
+
     character amanda {
         life := "alive"
         first := "Amanda"
@@ -8,6 +11,8 @@ state {
         age := 30
     }
 
+    ~ Alison Parker ~
+
     character alison {
         life := "alive"
         first := "Alison"
@@ -16,6 +21,9 @@ state {
         orientation := "male"
         age := 30
     }
+
+    ~ Jane Andrews ~
+
     character jane {
         life := "alive"
         first := "Jane"
@@ -24,14 +32,20 @@ state {
         orientation := "male"
         age := 30
     }
+
+    ~ Jake Hanson ~
+
     character jake {
         life := "alive"
         first := "Jake"
         last := "Hanson"
         gender := "male"
-        orientation := "male" + "female"
+        orientation := "male" union "female"
         age := 30
     }
+
+    ~ Billy Campbell ~
+
     character billy {
         life := "alive"
         first := "Billy"
@@ -40,6 +54,9 @@ state {
         orientation := "female"
         age := 30
     }
+
+    ~ Matt Fielding ~
+
     character matt {
         life := "alive"
         first := "Matt"
@@ -48,6 +65,9 @@ state {
         orientation := "male"
         age := 30
     }
+
+    ~ Peter Burns ~
+
     character peter {
         life := "alive"
         first := "Peter"
@@ -56,6 +76,9 @@ state {
         orientation := "female"
         age := 30
     }
+
+    ~ Michael Mancini ~
+
     character michael {
         life := "alive"
         first := "Michael"
@@ -64,85 +87,100 @@ state {
         orientation := "female"
         age := 30
     }
+
+    ~ Sydney Andrews ~
+
     character sydney {
         life := "alive"
         first := "Sydney"
         last := "Andrews"
         gender := "female"
-        orientation := "male" + "female"
+        orientation := "male" union "female"
         age := 30
     }
+
+    ~ Kimberly Shaw ~
+
     character kimberly {
         life := "alive"
         first := "Kimberly"
         last := "Shaw"
         gender := "female"
-        orientation := "male" + "female"
+        orientation := "male" union "female"
         age := 30
+    }
+
+    ~ Jane and Sydney are sisters. ~
+
+    jane<->sydney {
+        family := true
     }
 }
 
-goal life (character c) {
-    strategy "Character Life - No Operation" {
+goal life (character c) "Character Life" {
+    strategy "No Operation" {
         ?= c.life == "alive"
 
         "<div class='action'>{{c.first}} lies by the pool.</div>"
     }
 
-    strategy "Character Life - Resurrect" {
+    strategy "Resurrect" {
         ?= c.life == "dead"
 
         "<div class='action'>{{c.first}} returns to Melrose Place, very much alive.</div>"
     }
 }
 
-goal single (character c1) {
-    strategy "Character Single - No Operation" {
+goal single (character c1) "Character Single" {
+    strategy "No Operation" {
         character c2 !?= (c1<->c2).marriage
 
         "<div class='action'>{{c1.first}} lies by the pool, and {{c1.sub}} dreams of love while sunning {{c1.ref}}.</div>"
     }
 
-    strategy "Character Single - By Death" {
+    strategy "By Death" {
         character c2 ?= (c1<->c2).marriage
 
         c2.life := "dead"
 
-        (c1<->c2).marriage := false
+        (c1<->c2).marriage := empty
 
         "<div class='action'>{{c2.first}} dies, leaving {{c1.first}} alone.</div>"
     }
 
-    strategy "Character Single - By Divorce" {
+    strategy "By Divorce" {
         character c2 ?= (c1<->c2).marriage
 
-        (c1<->c2).marriage := false
+        (c1<->c2).marriage := empty
 
         "<div class='action'>{{c2.first}} and {{c1.first}} divorce.</div>"
     }
 }
 
 goal marry () "Marriage Scene" {
-    strategy {
-        character c1, character c2 ?= c1 != c2 && c1.gender [ c2.orientation && c2.gender [ c1.orientation
+  strategy "Marriage Strategy" {
+        character c1, character c2 ?= c1 == c2 &&
+          c1.gender subset c2.orientation &&
+          c2.gender subset c1.orientation &&
+          (c1<->c2).marriage == empty
 
-        life(c1)
-        life(c2)
-        single(c1)
-        single(c2)
+        life (c1)
+        life (c2)
+        single (c1)
+        single (c2)
 
         (c1<->c2).marriage := true
 
-        "<div class='action'>{{c1.first}} and {{c2.first}} marry.</div>"
+        "<div class=\"action\">{{c1.first}} and {{c2.first}} marry.</div>"
     }
 }
 
-goal divorce() "Divorce Scene" {
-    strategy {
-        character c1, character c2 ?= (c1<->c2).marriage
+goal divorce () "Divorce Scene" {
+    strategy "Divorce Strategy" {
+        character c1, character c2 !?= (c1<->c2).marriage
 
-        (c1<->c2).marriage := false
+        (c1<->c2).marriage := empty
 
-        "<div class='action'>{{c2.first}} and {{c1.first}} divorce.</div>"
+        "<div class=\"action\">{{c1.name}} and {{c1.first}} divorce.</div>"
     }
 }

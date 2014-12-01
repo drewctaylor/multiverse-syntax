@@ -5,147 +5,234 @@
 'name': 'Multiverse'
 'patterns': [
   {
-    'match': '\\s+([0-9]+)\\s+'
+    'match': '([A-z][A-z0-9]*)\\s*(:=|\\+=|-=)'
+    'comment': 'Match an attribute assignment.'
     'captures':
       '1':
-        'name':'string'
-  }
-  {
-    'match': '\\s+(true)\\s+'
-    'captures':
-      '1':
-        'name':'string'
-  }
-  {
-    'match': '\\s+(false)\\s+'
-    'captures':
-      '1':
-        'name':'string'
-  }
-  {
-    'match': '(goal)\\s+([A-z][A-z0-9]*)'
-    'captures':
-      '1':
-        'name':'keyword'
+        'name': 'identifier.attribute'
       '2':
-        'name':'identifier'
+        'name': 'reserved.operator.assignment'
   }
+  # three-character operators
   {
-    'match': '([A-z][A-z0-9]*)\\s+([A-z][A-z0-9]*)'
+    'match': '(\\!\\?\\=)'
     'captures':
       '1':
-        'name':'identifier'
-      '2':
-        'name':'entity'
+        'name':'reserved.operator.query'
   }
   {
-    'match': '\\s+([A-z][A-z0-9]*)\\s*(-=)'
+    'match': '(\\+\\+\\+|\\-\\-\\-)'
     'captures':
       '1':
-        'name':'attribute'
-      '2':
-        'name':'operator'
+        'name':'reserved.operator.bounded'
   }
   {
-    'match': '\\s+([A-z][A-z0-9]*)\\s*(\\+=)'
+    'match': '(<->)'
     'captures':
       '1':
-        'name':'attribute'
-      '2':
-        'name':'operator'
+        'name':'reserved.operator.delimiter'
+  }
+  # two-character operators
+  {
+    'match': '(\\?\\=)'
+    'captures':
+      '1':
+        'name':'reserved.operator.query'
   }
   {
-    'match': '\\s+([A-z][A-z0-9]*)\\s*(:=)'
+    'match': '(\\+\\+|\\-\\-)'
     'captures':
       '1':
-        'name':'attribute'
-      '2':
-        'name':'operator'
+        'name':'reserved.operator.ordered'
   }
   {
-    'match': '([A-z][A-z0-9]*)\\s*(==)\\s*([A-z][A-z0-9]*)'
+    'match': '(\\|\\||&&)'
     'captures':
       '1':
-        'name':'entity'
-      '2':
-        'name':'operator'
-      '3':
-        'name':'entity'
+        'name':'reserved.operator.boolean'
   }
   {
-    'match': '([A-z][A-z0-9]*)\\s*(!=)\\s*([A-z][A-z0-9]*)'
+    'match': '(==|!=)'
     'captures':
       '1':
-        'name':'entity'
+        'name':'reserved.operator.assignment'
+  }
+  {
+    'match': '(\\+=|-=|:=)'
+    'captures':
+      '1':
+        'name':'reserved.operator.assignment'
+  }
+  {
+    'match': '(<=|>=)'
+    'captures':
+      '1':
+        'name':'reserved.operator.relational'
+  }
+  {
+    'match': '(->)'
+    'captures':
+      '1':
+        'name':'reserved.operator.delimiter'
+  }
+  # one-character operators
+  {
+    'match': '(!)'
+    'captures':
+      '1':
+        'name':'reserved.operator.boolean'
+  }
+  {
+    'match': '(#)'
+    'captures':
+      '1':
+        'name':'reserved.operator.set'
+  }
+  {
+    'match': '(\\*|-|\\+|/)'
+    'captures':
+      '1':
+        'name':'reserved.operator.numeric'
+  }
+  {
+    'match': '(<|>)'
+    'captures':
+      '1':
+        'name':'reserved.operator.relational'
+  }
+  {
+    'match': '(,|\\{|\\}|\\(|\\))'
+    'captures':
+      '1':
+        'name':'reserved.operator.delimiter'
+  }
+  {
+    'match': '(?:^|\\s+)(false|true)\\s+'
+    'captures':
+      '1':
+        'name':'reserved.value.boolean'
+  }
+  {
+    'match': '(?:^|\\s+)(empty)\\s+'
+    'captures':
+      '1':
+        'name':'reserved.value.set'
+  }
+  {
+    'match': '(subset|union|intersection|cardinality|subset|superset|difference)'
+    'captures':
+      '1':
+        'name':'reserved.operator.set'
+  }
+  {
+    'match': '(state|goal|story|strategy|entity)'
+    'captures':
+      '1':
+        'name':'reserved.keyword'
+  }
+  {
+    'match': '(minimum|maximum)'
+    'captures':
+      '1':
+        'name':'reserved.operator.bounded'
+  }
+  {
+    'match': '(min|max)'
+    'captures':
+      '1':
+        'name':'reserved.operator.bounded'
+  }
+  {
+    'match': '(or|not|and)'
+    'captures':
+      '1':
+        'name':'reserved.operator.boolean'
+  }
+  {
+    'match': '(decrement|increment)'
+    'captures':
+      '1':
+        'name':'reserved.operator.ordered'
+  }
+  {
+    'match': '("[^"]*")\\s*(\\{)'
+    'captures':
+      '1':
+        'name': 'comment'
       '2':
-        'name':'operator'
-      '3':
-        'name':'entity'
+        'name': 'reserved.operator.delimiter'
   }
   {
     'begin': '(")'
     'beginCaptures' :
       '1':
-        'name': 'string'
-    'contentName':'string'
+        'name': 'value.string'
+    'contentName':'value.string'
     'patterns': [
       {
-      'include': '#template'
+        'include': '#template'
+      }
+      {
+      'match': '\\\\.'
+      'name': 'value.escape'
       }
     ]
     'end' : '(")'
     'endCaptures' :
       '1':
-        'name': 'string'
+        'name': 'value.string'
   }
   {
-    'match': '([A-z][A-z0-9]*)\\s*(\\.)\\s*([A-z][A-z0-9]*)'
-    'comment': 'Match an entity followed by an attribute'
-    'captures':
+    'begin': '(~)'
+    'beginCaptures' :
       '1':
-        'name': 'entity'
-      '2':
-        'name': 'operator'
-      '3':
-        'name': 'attribute'
+        'name': 'comment'
+    'contentName':'comment'
+    'end' : '(~)'
+    'endCaptures' :
+      '1':
+        'name': 'comment'
   }
   {
-    'match': '(\\()\\s*([A-z][A-z0-9]*)\\s*(<->)\\s*([A-z][A-z0-9]*)\\s*(\\))\\s*(\\.)\\s*([A-z][A-z0-9]*)'
-    'comment': 'Match an attribute with an optional entity.'
+    'match': '([A-z][A-z0-9]*)\\s*(\\()'
+    'comment': 'Match a goal.'
     'captures':
       '1':
-        'name': 'operator'
+        'name': 'identifier.goal'
       '2':
-        'name': 'entity'
-      '3':
-        'name': 'operator'
-      '4':
-        'name': 'entity'
-      '5':
-        'name': 'operator'
-      '6':
-        'name': 'operator'
-      '7':
-        'name': 'attribute'
+        'name': 'reserved.operator.delimiter'
   }
   {
-    'match': '(\\()\\s*([A-z][A-z0-9]*)\\s*(->)\\s*([A-z][A-z0-9]*)\\s*(\\))\\s*(\\.)\\s*([A-z][A-z0-9]*)'
-    'comment': 'Match an attribute with an optional entity.'
+    'match': '(\\.)([A-z][A-z0-9]*)\\s+'
+    'comment': 'Match an attribute.'
     'captures':
       '1':
-        'name': 'operator'
+        'name': 'keyword.operator.delimiter'
       '2':
-        'name': 'entity'
-      '3':
-        'name': 'operator'
-      '4':
-        'name': 'entity'
-      '5':
-        'name': 'operator'
-      '6':
-        'name': 'operator'
-      '7':
-        'name': 'attribute'
+        'name': 'identifier.attribute'
+  }
+  {
+    'match': '([A-z][A-z0-9]*)\\s+([A-z][A-z0-9]*)'
+    'comment': 'Match a kind followed by an entity.'
+    'captures':
+      '1':
+        'name': 'identifier.kind'
+      '2':
+        'name': 'identifier.entity'
+  }
+  {
+    'match': '([A-z][A-z0-9]*)'
+    'comment': 'Match an entity.'
+    'captures':
+      '1':
+        'name': 'identifier.entity'
+  }
+  {
+    'match': '(([0-9]*\\.)?([0-9]+))'
+    'comment': 'Match a number.'
+    'captures':
+      '1':
+        'name': 'value.numeric'
   }
 ]
 'repository':
@@ -155,7 +242,7 @@
         'begin': '(\\{\\{)'
         'beginCaptures' :
           '1':
-            'name': 'template'
+            'name': 'reserved.operator.delimiter'
         'contentName':'template'
         'patterns': [
           {
@@ -165,20 +252,25 @@
         'end' : '(\\}\\})'
         'endCaptures' :
           '1':
-            'name': 'template'
+            'name': 'reserved.operator.delimiter'
       }
     ]
   'attribute':
     'patterns': [
       {
-        'match': '([A-z][A-z0-9]*)\\s*(\\.)\\s*([A-z][A-z0-9]*)'
-        'comment': 'Match an entity followed by an attribute'
+        'match': '([A-z][A-z0-9]*)(\\.)'
+        'comment': 'Match an entity.'
         'captures':
           '1':
-            'name': 'entity'
+            'name': 'identifier.entity'
           '2':
-            'name': 'operator'
-          '3':
-            'name': 'attribute'
+            'name': 'keyword.operator.delimiter'
+      }
+      {
+        'match': '([A-z][A-z0-9]*)'
+        'comment': 'Match an attribute.'
+        'captures':
+          '1':
+            'name': 'identifier.attribute'
       }
     ]
