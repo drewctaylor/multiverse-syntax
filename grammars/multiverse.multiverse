@@ -1,3 +1,5 @@
+story "Melrose Place" 0
+
 state {
 
     ~ Amanda Woodward ~
@@ -86,6 +88,7 @@ state {
         gender := "male"
         orientation := "female"
         age := 30
+        friendly := true
     }
 
     ~ Sydney Andrews ~
@@ -159,7 +162,7 @@ goal single (character c1) "Character Single" {
 
 goal marry () "Marriage Scene" {
   strategy "Marriage Strategy" {
-        character c1, character c2 ?= c1 == c2 &&
+        character c1, character c2 ?= c1 != c2 &&
           c1.gender subset c2.orientation &&
           c2.gender subset c1.orientation &&
           (c1<->c2).marriage == empty
@@ -177,10 +180,10 @@ goal marry () "Marriage Scene" {
 
 goal divorce () "Divorce Scene" {
     strategy "Divorce Strategy" {
-        character c1, character c2 !?= (c1<->c2).marriage
+        character c1, character c2 ?= (c1<->c2).marriage
 
         (c1<->c2).marriage := empty
 
-        "<div class=\"action\">{{c1.name}} and {{c1.first}} divorce.</div>"
+        "<div class=\"action\">{{c1.first}} and {{c2.first}} divorce.</div>"
     }
 }
