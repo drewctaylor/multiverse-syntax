@@ -4,7 +4,7 @@ Multiverse Language Support in Atom
 Adds Multiverse syntax highlighting to Atom.
 
 Installing Multiverse Language Support
-======================================
+--------------------------------------
 
 1. Download, install, and run [Atom](https://atom.io/).
 2. Press `Command+Shift+P`. A textfield will appear below the center of the window title bar.
