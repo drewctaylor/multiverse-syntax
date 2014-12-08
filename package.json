@@ -1,6 +1,5 @@
 {
   "name": "language-multiverse",
-  "version": "0.4.0",
   "description": "Multiverse language support in Atom",
   "engines": {
     "atom": "*",
