@@ -1,10 +1,12 @@
 {
   "name": "language-multiverse",
+  "version": "0.46.0",
   "description": "Multiverse language support in Atom",
   "engines": {
     "atom": "*",
     "node": "*"
   },
+  "theme": "syntax",
   "homepage": "http://github.com/drewctaylor/language-multiverse",
   "repository": {
     "type": "git",
@@ -12,6 +14,5 @@
   },
   "bugs": {
     "url": "https://github.com/drewctaylor/language-multiverse/issues"
-  },
-  "version": "0.45.0"
+  }
 }
