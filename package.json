@@ -1,6 +1,6 @@
 {
   "name": "multiverse-syntax",
-  "version": "0.45.0",
+  "version": "1.0.0",
   "description": "Multiverse language support in Atom",
   "engines": {
     "atom": "*",
